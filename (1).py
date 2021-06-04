@@ -76,10 +76,7 @@ print(bank(1000, 3))"""  # это очень интересный пример r
 
 print(is_prime(1))"""  # я туп и не допер сам
 
-
-check_number_higher_year = 1  # это высокосный год
-check_february = 28  # 1 это високосный год
-
+check_february = 28
 check_month = 1  # 1 это правда
 check_day = 1  # 1 это правда
 check_year = 1  # 1 это правда
@@ -89,25 +86,25 @@ true_numbers = (check_month, check_day, check_year)
 
 def date(day, month, year):
     global check_year
+    global check_month
+    global check_day
     if year < 1:
         check_year = 0
-    if day > 31:
-        check_day = 0
-    elif day < 1:
-        check_day = 0
 
-    def check_month():
+
+    def check_months():
         global check_month
         if month in range(1, 13):
             check_month = 1
         else:
             check_month = 0
 
-    def check_year():
-        global check_number_higher_year
+    def check_years():
         global check_february
         if year % 4 == 0:
             check_number_higher_year = 1
+        else:
+            check_number_higher_year = 0
         if check_number_higher_year == 1:
             check_february = 29
 
@@ -117,29 +114,37 @@ def date(day, month, year):
         numbers_31 = [1, 3, 5, 7, 8, 10, 12]
         number_30 = [4, 6, 9, 11]
         if month in numbers_31:
-            check_day = 1
+            if day <= 31:
+                check_day = 1
+            else:
+                check_day = 0
         elif month in number_30:
-            check_day = 1
+            if day <= 30:
+                check_day = 1
+            else:
+                check_day = 0
         elif month == 2:
-            check_day = 1
-        else:
-            check_day = 0
+            if day <= check_february:
+                check_day = 1
+            else:
+                check_day = 0
 
-    check_month()
-    check_year()
+
+    check_months()
+    check_years()
     check_days()
+    print(check_day)
 
-
-    if true_numbers[0] == 0:
+    """if true_numbers[0] == 0:
         print(False)
     elif true_numbers[1] == 0:
         print(False)
     elif true_numbers[2] == 0:
         print(False)
     else:
-        print(True)
+        print(True)"""
 
-date(5555, 14, 2000)
+date(1, 1, 2001)
 
 
 
