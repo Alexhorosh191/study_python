@@ -1,2 +1,2 @@
 # study_python
-It's test project
+This repository contains small code elements or exercises made during the course of the courses
