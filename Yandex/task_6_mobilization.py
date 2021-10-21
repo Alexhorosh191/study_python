@@ -38,7 +38,6 @@
 35
 43"""
 
-"""
 try:
     number_people = int(input())
     if 2 <= number_people <= 210 and number_people % 2 == 0:
@@ -82,71 +81,51 @@ try:
         else:
             raise ValueError()
 
-
 except ValueError:
     print("Oops!  That was no valid number.  Try again...")
     exit()
-"""
-number_people = 4
-list_develop = [7, 15, 3, 4]
-list_manager = [10, 10, 0, 6]
-number_cert = 2
-list_cert = [[1, 1, 4], [4, 1, 6], [2, 2, 10]]
+
+# checking for duplicates in the sheets
+kopy_develop = []
+kopy_manager = []
+count = 0
+
+if len(set(list_manager)) != len(list_manager):
+    for i in range(len(list_manager)):
+        count += 1
+        kopy_manager.append(count)
+else:
+    kopy_manager = list_manager
+if len(set(list_develop)) != len(list_develop):
+    for i in range(len(list_manager)):
+        count += 1
+        kopy_develop.append(count)
+else:
+    kopy_develop = list_develop
 
 
+def get_max_potentional():
 
+    razn_arr = dict()
+    for item in range(number_people):
+        razn_arr[list_develop[item] - list_manager[item]] = list_manager[item]
+    result = 0
+    for item, key in enumerate(sorted(razn_arr.keys())):
 
-def sort_people():
-    top_develop = []
-    top_manager = []
-
-    for (dev, man) in zip(list_develop, list_manager):
-        if dev > man:
-            top_develop.append(dev)
+        if item >= number_people/2:
+            result += razn_arr[key] + key
         else:
-            top_manager.append(man)
+            result += razn_arr[key]
+    return result
 
-    max_number_dev = sum(top_develop)
-    max_number_man = sum(top_manager)
-    print(max_number_man + max_number_dev)
+for (dev, man, cert) in zip(list_develop, list_manager, list_certificate):
+    for i in range(number_people):
+        if kopy_develop.index(kopy_develop[i]) + 1 == cert[0] and cert[1] == 1:
+            list_develop[i] += cert[2]
+            print(get_max_potentional())
 
-def sort_certificate():
-    # checking for duplicates in the sheets
-    kopy_develop = []
-    kopy_manager = []
-    count = 0
-    if len(set(list_manager)) != len(list_manager):
-        for i in range(len(list_manager)):
-            count += 1
-            kopy_manager.append(count)
-    else:
-        kopy_manager = list_manager
-    if len(set(list_develop)) != len(list_develop):
-        for i in range(len(list_manager)):
-            count += 1
-            kopy_develop.append(count)
-    else:
-        kopy_develop = list_develop
-
-    for (dev, man, cert) in zip(list_develop, list_manager, list_cert):
-        for i in range(number_people):
-            if kopy_develop.index(kopy_develop[i]) + 1 == cert[0] and cert[1] == 1:
-                list_develop[i] += cert[2]
-
-    for (dev, man, cert) in zip(list_develop, list_manager, list_cert):
-        for i in range(number_people):
-            if kopy_manager.index(kopy_manager[i]) + 1 == cert[0] and cert[1] == 2:
-                list_manager[i] += cert[2]
-
-
-
-
-"""num = list_certificate[0]
-type = list_certificate[1]
-d = list_certificate[2]
-
-print(num, type, d)"""
-
-
-
-
+for (dev, man, cert) in zip(list_develop, list_manager, list_certificate):
+    for i in range(number_people):
+        if kopy_manager.index(kopy_manager[i]) + 1 == cert[0] and cert[1] == 2:
+            list_manager[i] += cert[2]
+            print(get_max_potentional())
